@@ -3,7 +3,7 @@
 
 ADB tool is a tiny tool with an easy-to-use UI. Using this tool Android mobile testers can collect string ids (for automation), screenshots, logcat, and dumpsys.
 
-Click here for [Demo Video](https://www.youtube.com/watch?v=JQja2PydTIA)
+Click [here](https://www.youtube.com/watch?v=JQja2PydTIA) for demo video.
 
 
 #Installation
