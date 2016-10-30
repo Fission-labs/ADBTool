@@ -3,5 +3,44 @@
 
 ADB tool is a tiny tool with an easy-to-use UI. Using this tool Android mobile testers can collect string ids (for automation), screenshots, logcat, and dumpsys.
 
+Click here for [Demo Video](https://www.youtube.com/watch?v=JQja2PydTIA)
+
+
+#Installation
+
+1. To use this tool you should have ANDROID SDK. You can download ANDROID SDK from this link https://developer.android.com/studio/index.html#downloads
+
+2. Set Android SDK path in Environment varaibles as ANDROID_HOME.
+
+3. Download the [ADBTool.jar](https://sourceforge.net/projects/adbtool/)
+
+#How to run
+
+On MAC or Linux:
+
+Open terminal and go to the path where ADBTool.jar file downloaded. And run this command
+
+java -jar adbtool.jar
+
+On Windows:
+
+Double click on that jar file or run from terminal as
+
+java -jar adbtool.jar
+
+#Capturing Screenshot:
+
+1. Click on Screen Shot button from left side menus.
+
+2. Select your device from device list drop down.
+
+3. Click on Capture button.
+
+4. Click on Edit button if you want to edit screenshot.
+
+5. Click on Save button to save the screenshot.
+
+![capture](https://raw.githubusercontent.com/fission-labs/ADBTool/master/docs/Screenshot.gif)
+
 
 
