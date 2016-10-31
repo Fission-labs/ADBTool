@@ -88,6 +88,24 @@ java -jar adbtool.jar
 
 ![capture](https://raw.githubusercontent.com/fission-labs/ADBTool/master/docs/Screenrecord.gif)
 
+#Install and Uninstall APK:
+
+1. Select Install APK from left side menus.
+
+2. Select your device from list and drag or browse your APK.
+
+3. Click Install button to install the selected APK into device.
+
+4. Click on Uninstall button from left side menus.
+
+5. Select your device from device list drop down.
+
+6. After selecting your device it shows all installed application package names.
+
+7. Select any application from the list, click Clear Data button to clear application data or click on Uninstall button to uninstall the selected application.
+
+![capture](https://raw.githubusercontent.com/fission-labs/ADBTool/master/docs/install_uninstall.gif)
+
 
 
 
