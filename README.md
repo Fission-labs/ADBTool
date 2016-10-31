@@ -60,5 +60,20 @@ java -jar adbtool.jar
 
 ![capture](https://raw.githubusercontent.com/fission-labs/ADBTool/master/docs/Logcat.gif)
 
+#Extract Strings and String ids:
+
+1. Select Extract Strings from Tools menu.
+
+2. Select your device from device list drop down.
+
+3. Select package name from package list drop down.
+
+4. If you know the string and want to know its string id then enter your string in String Value text box then corrsponding string id will be shown in String ID text box.
+
+5. Or by clicking on Get Strings.xml button, you can get all strings and string ids. 
+
+![capture](https://raw.githubusercontent.com/fission-labs/ADBTool/master/docs/extractstrings.gif)
+
+
 
 
