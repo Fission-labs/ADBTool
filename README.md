@@ -106,6 +106,30 @@ java -jar adbtool.jar
 
 ![capture](https://raw.githubusercontent.com/fission-labs/ADBTool/master/docs/install_uninstall.gif)
 
+#Monkey Test:
+
+1. Select your device from drop down list.
+
+2. Select package name.
+
+3. Enter number of events and delay between events. you should enter delay in milliseconds. (1 second = 1000 milliseconds)
+
+4. Click on Run Test button to run the monkey test.
+
+#Dumpsys:
+
+1. Select your device from drop down list.
+
+2. Click on Get Dumpsys button.
+
+#Connect via WIFI:
+
+1. Select Connect using WIFI from Tools menu.
+
+2. Click on Connect button.
+
+3. After connecting successfully you can remove the usb cable and run through WIFI.
+
 
 
 
