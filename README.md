@@ -74,6 +74,21 @@ java -jar adbtool.jar
 
 ![capture](https://raw.githubusercontent.com/fission-labs/ADBTool/master/docs/extractstrings.gif)
 
+#Screen Recording:
+
+1. Select Screen Record from left side menus.
+
+2. Select your device from device list drop down.
+
+3. Click on Start button to start recording.
+
+4. Click on Stop button to stop recording.
+
+5. Save the recorded video by clicking on Save button.
+
+![capture](https://raw.githubusercontent.com/fission-labs/ADBTool/master/docs/Screenrecord.gif)
+
+
 
 
 
