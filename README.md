@@ -1,7 +1,7 @@
 ##Introduction:
 
 
-ADB tool is a tiny tool with an easy-to-use UI. Using this tool Android mobile testers can collect string ids (for automation), screenshots, logcat, and dumpsys.
+ADBTool is very helpful tool to Android mobile testers with easy User Interface. Using this tool Android mobile testers can collect string ids (for automation), screenshots, logcat, and dumpsys and etc.
 
 Click [HERE](https://www.youtube.com/watch?v=JQja2PydTIA) for demo video.
 
