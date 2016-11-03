@@ -10,7 +10,7 @@ Click [HERE](https://www.youtube.com/watch?v=JQja2PydTIA) for demo video.
 
 1. To use this tool you should have ANDROID SDK. You can download ANDROID SDK from this link https://developer.android.com/studio/index.html#downloads
 
-2. Set Android SDK path in Environment varaibles as ANDROID_HOME.
+2. Set Android SDK path in Environment variables as ANDROID_HOME.
 
 3. Download the [ADBTool.jar](https://sourceforge.net/projects/adbtool/)
 
