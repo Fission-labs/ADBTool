@@ -25,23 +25,23 @@ import javax.swing.border.TitledBorder;
 import com.adbsimple.interfaces.Const;
 import com.adbsimple.util.Utils;
 
-public class DumpsysPanel extends JPanel implements ActionListener,
+public class DumpPanel extends JPanel implements ActionListener,
 		ComponentListener, Const {
 
 	private Runtime runTime;
 	private Process process;
 	private JComboBox<String> deviceList;
 	private HashMap<String, String> deviceSerial;
-	private JButton dumpsysBtn;
+	private JButton dumpsysBtn, dumpstateBtn;
 	private String line;
 	private BufferedReader bufferedReader;
 
-	public DumpsysPanel() {
+	public DumpPanel() {
 		setVisible(true);
 		setLayout(null);
 		addComponentListener(this);
 		Border border = BorderFactory.createEtchedBorder();
-		Border border1 = BorderFactory.createTitledBorder(border, "Dumpsys",
+		Border border1 = BorderFactory.createTitledBorder(border, "Dump",
 				TitledBorder.CENTER, TitledBorder.CENTER);
 		setBorder(border1);
 
@@ -49,11 +49,13 @@ public class DumpsysPanel extends JPanel implements ActionListener,
 		addComponents();
 
 		dumpsysBtn.addActionListener(this);
+		dumpstateBtn.addActionListener(this);
 
 	}
 
 	private void init() {
 		dumpsysBtn = new JButton("Get Dumpsys");
+		dumpstateBtn = new JButton("Get Dumpstate");
 		deviceList = new JComboBox<String>();
 		deviceSerial = new HashMap<>();
 
@@ -66,16 +68,18 @@ public class DumpsysPanel extends JPanel implements ActionListener,
 	private void addComponents() {
 		add(deviceList).setBounds(20, 20, 200, 30);
 		add(dumpsysBtn).setBounds(20, 200, 200, 30);
+		add(dumpstateBtn).setBounds(20, 250, 200, 30);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equalsIgnoreCase("Get Dumpsys")) {
-			if (deviceList.getSelectedItem().toString()
-					.equalsIgnoreCase(NO_DEVICE)) {
-				JOptionPane.showMessageDialog(null, "Please select device");
-			} else {
+		if (deviceList.getSelectedItem().toString().equalsIgnoreCase(NO_DEVICE)) {
+			JOptionPane.showMessageDialog(null, "Please select device");
+		} else {
+			if (e.getActionCommand().equalsIgnoreCase("Get Dumpsys")) {
 				getDumpSys();
+			} else {
+				getDumpState();
 			}
 		}
 	}
@@ -109,7 +113,55 @@ public class DumpsysPanel extends JPanel implements ActionListener,
 						Utils.setProgressText("Getting and saving dumpsys into file...");
 						FileWriter fileWriter = new FileWriter(file, false);
 						while ((line = bufferedReader.readLine()) != null) {
-							fileWriter.write(line);
+							fileWriter.write(line + "\n");
+							fileWriter.flush();
+						}
+						fileWriter.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					Utils.dismisProgressDialog();
+					JOptionPane.showMessageDialog(null,
+							"File Saved Successfully");
+				}
+			});
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void getDumpState() {
+		JFileChooser fileChooser = new JFileChooser();
+		int userSelection = fileChooser.showSaveDialog(this);
+		if (userSelection == JFileChooser.APPROVE_OPTION) {
+			File file = fileChooser.getSelectedFile();
+			runDumpstateCommand(file);
+		}
+
+	}
+
+	private void runDumpstateCommand(final File file) {
+		String deviceSerNumber = deviceSerial.get(deviceList.getSelectedItem());
+		String dumpstateCMD = ADB_PATH + "adb -s " + deviceSerNumber
+				+ " shell dumpstate";
+		Utils.showProgressDialog();
+		try {
+			process = runTime.exec(dumpstateCMD);
+			line = null;
+			bufferedReader = new BufferedReader(new InputStreamReader(
+					process.getInputStream()));
+			ExecutorService executorService = Executors
+					.newSingleThreadExecutor();
+			executorService.execute(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						Utils.setProgressText("Getting and saving dumpstate into file...");
+						FileWriter fileWriter = new FileWriter(file, false);
+						while ((line = bufferedReader.readLine()) != null) {
+							fileWriter.write(line + "\n");
 							fileWriter.flush();
 						}
 						fileWriter.close();

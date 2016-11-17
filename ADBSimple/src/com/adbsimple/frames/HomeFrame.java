@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import com.adbsimple.help.AboutDialog;
 import com.adbsimple.panels.ButtonsPanel;
 import com.adbsimple.panels.ConnectPanel;
-import com.adbsimple.panels.DumpsysPanel;
+import com.adbsimple.panels.DumpPanel;
 import com.adbsimple.panels.ExtractStringsPanel;
 import com.adbsimple.panels.InstallPanel;
 import com.adbsimple.panels.LogcatPanel;
@@ -44,7 +44,7 @@ public class HomeFrame extends JFrame implements
 	private ScreenRecordPanel screenRecordPanel;
 	private ExtractStringsPanel extractStringsPanel;
 	private MonkeyTestPanel monkeyTestPanel;
-	private DumpsysPanel dumpsysPanel;
+	private DumpPanel dumpPanel;
 	private AboutDialog aboutDialog;
 	private JButton refreshJB;
 	private String currentCard;
@@ -157,7 +157,7 @@ public class HomeFrame extends JFrame implements
 		screenRecordPanel = new ScreenRecordPanel();
 		extractStringsPanel = new ExtractStringsPanel();
 		monkeyTestPanel = new MonkeyTestPanel();
-		dumpsysPanel = new DumpsysPanel();
+		dumpPanel = new DumpPanel();
 
 		add(buttonsPanel).setBounds(0, 0, 150, 700);
 		add(refreshJB).setBounds(160, 2, 130, 16);
@@ -176,7 +176,7 @@ public class HomeFrame extends JFrame implements
 		placeholderPanel.add("Screen Shot", screenShotPanel);
 		placeholderPanel.add("Screen Record", screenRecordPanel);
 		placeholderPanel.add("Monkey Test", monkeyTestPanel);
-		placeholderPanel.add("Dumpsys", dumpsysPanel);
+		placeholderPanel.add("Dump", dumpPanel);
 		placeholderPanel.add("<html>Connect <br>using WIFI</html>",
 				connectPanel);
 		placeholderPanel.add("Extract Strings", extractStringsPanel);
@@ -238,8 +238,8 @@ public class HomeFrame extends JFrame implements
 				monkeyTestPanel.runDeviceListCMD();
 			} else if (currentCard.equalsIgnoreCase("Extract Strings")) {
 				extractStringsPanel.runDeviceListCMD();
-			} else if (currentCard.equalsIgnoreCase("Dumpsys")) {
-				dumpsysPanel.runDeviceListCMD();
+			} else if (currentCard.equalsIgnoreCase("Dump")) {
+				dumpPanel.runDeviceListCMD();
 			}
 		}
 

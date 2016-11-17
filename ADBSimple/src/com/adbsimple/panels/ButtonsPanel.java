@@ -10,7 +10,7 @@ import javax.swing.border.Border;
 
 public class ButtonsPanel extends JPanel implements ActionListener {
 	JButton connectWithWifiBtn, installBtn, uninstallBtn, logcatBtn,
-			screenshotBtn, screenrecordBtn, monkeyTestBtn, dumpsysBtn;
+			screenshotBtn, screenrecordBtn, monkeyTestBtn, dumpBtn;
 	private int btn_width = 120, btn_height = 50;
 
 	private ButtonClickListener buttonClickListener;
@@ -56,9 +56,9 @@ public class ButtonsPanel extends JPanel implements ActionListener {
 		monkeyTestBtn.setFocusPainted(false);
 		monkeyTestBtn.setContentAreaFilled(false);
 
-		dumpsysBtn = new JButton("Dumpsys");
-		dumpsysBtn.setFocusPainted(false);
-		dumpsysBtn.setContentAreaFilled(false);
+		dumpBtn = new JButton("Dump");
+		dumpBtn.setFocusPainted(false);
+		dumpBtn.setContentAreaFilled(false);
 	}
 
 	private void addComponentsToPanel() {
@@ -68,7 +68,7 @@ public class ButtonsPanel extends JPanel implements ActionListener {
 		add(screenshotBtn).setBounds(10, 200, btn_width, btn_height);
 		add(screenrecordBtn).setBounds(10, 260, btn_width, btn_height);
 		add(monkeyTestBtn).setBounds(10, 320, btn_width, btn_height);
-		add(dumpsysBtn).setBounds(10, 380, btn_width, btn_height);
+		add(dumpBtn).setBounds(10, 380, btn_width, btn_height);
 	}
 
 	private void addListeners() {
@@ -79,7 +79,7 @@ public class ButtonsPanel extends JPanel implements ActionListener {
 		screenshotBtn.addActionListener(this);
 		screenrecordBtn.addActionListener(this);
 		monkeyTestBtn.addActionListener(this);
-		dumpsysBtn.addActionListener(this);
+		dumpBtn.addActionListener(this);
 	}
 
 	public void setButtonClickListener(ButtonClickListener listener) {
