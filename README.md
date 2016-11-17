@@ -116,11 +116,13 @@ java -jar adbtool.jar
 
 4. Click on Run Test button to run the monkey test.
 
-#Dumpsys:
+#Dump:
 
 1. Select your device from drop down list.
 
-2. Click on Get Dumpsys button.
+2. Click on Get Dumpsys button to pull dumpsys from selected device.
+
+3. Click on Get Dumpstate button to pull dumpstate from selected device.
 
 #Connect via WIFI:
 
