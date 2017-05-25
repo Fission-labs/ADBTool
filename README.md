@@ -106,6 +106,16 @@ java -jar adbtool.jar
 
 ![capture](https://raw.githubusercontent.com/fission-labs/ADBTool/master/docs/install_uninstall.gif)
 
+#Extract APK:
+
+1. Select Install APK from left side menus.
+
+2. Drag or browse your APK.
+
+3. Click Extract APK button to extract or unzip the selected APK file.
+
+4. By default it creates a directory with selected APK file name and extract contents to it. And the path of this directory is same as selected APK file path.
+
 #Monkey Test:
 
 1. Select your device from drop down list.
