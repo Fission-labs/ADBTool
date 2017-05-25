@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class AboutDialog extends JDialog {
 	private JLabel versionJL, authorJL, powerdbyJL;
 	private JLabel versionNumJL, authorNameJL, powerdbynameJL;
-	private final String VERSION = "1.2";
+	private final String VERSION = "2.0";
 	private final String TITLE = "About";
 	private final String fissionURI = "http://www.fissionlabs.com/";
 
