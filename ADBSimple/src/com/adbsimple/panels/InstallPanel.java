@@ -7,11 +7,15 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -32,12 +36,13 @@ public class InstallPanel extends JPanel implements ActionListener,
 		ComponentListener, Const {
 	private PhonePanel phonePanel;
 	private JLabel hintJL, apkFileNameJL;
-	private JButton installJB, browseJB;
+	private JButton installJB, browseJB, unzipJB;
 	private Runtime runTime;
 	private Process process;
 	private JComboBox<String> deviceList;
 	private HashMap<String, String> deviceSerial;
 	private String apkPath;
+	private File apkFile;
 	private boolean isSuccess, isWaiting;
 	private String line;
 	private BufferedReader bufferedReader;
@@ -57,6 +62,7 @@ public class InstallPanel extends JPanel implements ActionListener,
 		setDragAndDropListener();
 		browseJB.addActionListener(this);
 		installJB.addActionListener(this);
+		unzipJB.addActionListener(this);
 
 	}
 
@@ -67,6 +73,7 @@ public class InstallPanel extends JPanel implements ActionListener,
 		apkFileNameJL = new JLabel();
 		browseJB = new JButton("Browse");
 		installJB = new JButton("Install");
+		unzipJB = new JButton("Extract APK");
 		deviceList = new JComboBox<String>();
 		deviceSerial = new HashMap<>();
 
@@ -81,12 +88,14 @@ public class InstallPanel extends JPanel implements ActionListener,
 		phonePanel.add(hintJL).setBounds(100, 150, 200, 50);
 		phonePanel.add(browseJB).setBounds(120, 210, 100, 30);
 		phonePanel.add(apkFileNameJL).setBounds(100, 250, 150, 30);
-		phonePanel.add(installJB).setBounds(120, 440, 100, 30);
+		phonePanel.add(installJB).setBounds(40, 440, 100, 30);
+		phonePanel.add(unzipJB).setBounds(160, 440, 120, 30);
 		add(phonePanel).setBounds(250, 50, 300, 500);
 	}
 
 	public void setApkFile(File file) {
 		apkFileNameJL.setText(file.getName());
+		apkFile = file;
 		apkPath = "\"" + file.getPath() + "\"";
 	}
 
@@ -107,13 +116,15 @@ public class InstallPanel extends JPanel implements ActionListener,
 				setApkFile(file);
 			}
 
-		} else if (e.getActionCommand().equalsIgnoreCase("Install")) {
+		} else {
 			if (apkFileNameJL.getText().equalsIgnoreCase("")) {
 				JOptionPane.showMessageDialog(null, "Please select apk file");
+			} else if (e.getActionCommand().equalsIgnoreCase("Extract APK")) {
+				unzipAPK(apkFile.getPath());
 			} else if (deviceList.getSelectedItem().toString()
 					.equalsIgnoreCase(NO_DEVICE)) {
 				JOptionPane.showMessageDialog(null, "Please select device");
-			} else {
+			} else if (e.getActionCommand().equalsIgnoreCase("Install")) {
 				String deviceSerNumber = deviceSerial.get(deviceList
 						.getSelectedItem());
 				installApk(deviceSerNumber, apkPath);
@@ -297,4 +308,62 @@ public class InstallPanel extends JPanel implements ActionListener,
 			e.printStackTrace();
 		}
 	}
+
+	private void unzipAPK(final String apkPath) {
+		Utils.showProgressDialog();
+		ExecutorService executorService = Executors.newSingleThreadExecutor();
+		executorService.execute(new Runnable() {
+			@Override
+			public void run() {
+				File file = new File(apkPath);
+				File dir = new File(file.getParent()
+						+ File.separator
+						+ file.getName().substring(0,
+								file.getName().lastIndexOf(".")));
+				// create output directory if it doesn't exist
+				if (!dir.exists())
+					dir.mkdirs();
+				// buffer for read and write data to file
+				byte[] buffer = new byte[1024];
+				try {
+					FileInputStream fis = new FileInputStream(apkPath);
+					ZipInputStream zis = new ZipInputStream(fis);
+					ZipEntry ze = zis.getNextEntry();
+					while (ze != null) {
+						String fileName = ze.getName();
+						File newFile = new File(dir.getPath() + File.separator
+								+ fileName);
+						Utils.setProgressText("Extracting to "
+								+ newFile.getAbsolutePath());
+						// create directories for sub directories in zip
+						new File(newFile.getParent()).mkdirs();
+						FileOutputStream fos = new FileOutputStream(newFile);
+						int len;
+						while ((len = zis.read(buffer)) > 0) {
+							fos.write(buffer, 0, len);
+						}
+						fos.close();
+						// close this ZipEntry
+						zis.closeEntry();
+						ze = zis.getNextEntry();
+					}
+					Utils.dismisProgressDialog();
+					// close last ZipEntry
+					zis.closeEntry();
+					zis.close();
+					fis.close();
+					JOptionPane.showMessageDialog(InstallPanel.this,
+							"APK extracted to " + dir.getPath());
+				} catch (IOException e) {
+					Utils.dismisProgressDialog();
+					JOptionPane.showMessageDialog(InstallPanel.this,
+							"There may be some probleme with APK file");
+					e.printStackTrace();
+				}
+			}
+
+		});
+
+	}
+
 }
